@@ -40,10 +40,3 @@ def mahsulot_top(mahsulot_id: int) -> dict | None:
             if m["id"] == mahsulot_id:
                 return m
     return None
-
-
-
-
-
-# 6dars
-

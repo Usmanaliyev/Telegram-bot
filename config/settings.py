@@ -10,22 +10,26 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vo0*k-uhkf_*yco4p$y_-)m#xn^41!$)4%v$(so3fjaecs+(&a'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') or 'django-insecure-vo0*k-uhkf_*yco4p$y_-)m#xn^41!$)4%v$(so3fjaecs+(&a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 
 # Application definition
@@ -73,12 +77,25 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Baza: DB_NAME berilsa PostgreSQL, aks holda SQLite (development)
+if os.getenv("DB_NAME"):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DB_NAME"),
+            "USER": os.getenv("DB_USER", "postgres"),
+            "PASSWORD": os.getenv("DB_PASSWORD", ""),
+            "HOST": os.getenv("DB_HOST", "localhost"),
+            "PORT": os.getenv("DB_PORT", "5432"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # Password validation
@@ -126,3 +143,14 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+
+# Telegram bot
+BOT_TOKEN = os.getenv('BOT_TOKEN', '')
+ADMIN_IDS = [int(x) for x in os.getenv('ADMIN_IDS', '').replace(' ', '').split(',') if x]
+
+# FSM holati: USE_REDIS=1 bo'lsa Redis, aks holda operativ xotira
+USE_REDIS = os.getenv('USE_REDIS', '0') == '1'
+REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'

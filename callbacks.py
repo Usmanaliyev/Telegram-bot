@@ -1,126 +1,41 @@
-
-# 5dars
-# ============================================================
-#  CallbackData factory — satr o'rniga TIPLI obyekt
-#
-#  Oldin (3-dars):  callback_data=f"mah:{m['id']}"      -> qo'lda parslash
-#  Endi:            ProductCB(action="open", product_id=1).pack()
-#
-#  Foydasi: tip xatosi bo'lmaydi, 64 bayt limiti nazorat qilinadi,
-#           handler'ga tayyor obyekt kelib tushadi.
-# ============================================================
-
-# from aiogram.filters.callback_data import CallbackData
-#
-#
-# class MenuCB(CallbackData, prefix="menu"):
-#     action: str                    # categories | cart | noop
-#
-#
-# class CategoryCB(CallbackData, prefix="cat"):
-#     key: str
-#
-#
-# class ProductCB(CallbackData, prefix="prod"):
-#     action: str                    # open | add | inc | dec
-#     product_id: int = 0
-#     qty: int = 1
-#
-#
-# class CartCB(CallbackData, prefix="cart"):
-#     action: str                    # inc | dec | del | clear | checkout
-#     product_id: int = 0
-#
-#
-# class CheckoutCB(CallbackData, prefix="chk"):
-#     action: str                    # payment | submit | abort
-#     value: str = ""
-#
-#
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# 4 dars
-
-
-# ============================================================
-#  CallbackData factory — satr o'rniga TIPLI obyekt
-#
-#  Oldin (3-dars):  callback_data=f"mah:{m['id']}"      -> qo'lda parslash
-#  Endi:            ProductCB(action="open", product_id=1).pack()
-#
-#  Foydasi: tip xatosi bo'lmaydi, 64 bayt limiti nazorat qilinadi,
-#           handler'ga tayyor obyekt kelib tushadi.
-# ============================================================
-#
-# from aiogram.filters.callback_data import CallbackData
-#
-#
-# class MenuCB(CallbackData, prefix="menu"):
-#     action: str                    # categories | cart | noop
-#
-#
-# class CategoryCB(CallbackData, prefix="cat"):
-#     key: str
-#
-#
-# class ProductCB(CallbackData, prefix="prod"):
-#     action: str                    # open | add | inc | dec
-#     product_id: int = 0
-#     qty: int = 1
-#
-#
-# class CartCB(CallbackData, prefix="cart"):
-#     action: str                    # inc | dec | del | clear | checkout
-#     product_id: int = 0
-
-
-
-# 6dars
-# ============================================================
-#  CallbackData factory — satr o'rniga TIPLI obyekt
-#
-#  Oldin (3-dars):  callback_data=f"mah:{m['id']}"      -> qo'lda parslash
-#  Endi:            ProductCB(action="open", product_id=1).pack()
-#
-#  Foydasi: tip xatosi bo'lmaydi, 64 bayt limiti nazorat qilinadi,
-#           handler'ga tayyor obyekt kelib tushadi.
-# ============================================================
-
 from aiogram.filters.callback_data import CallbackData
 
 
 class MenuCB(CallbackData, prefix="menu"):
-    action: str                    # categories | cart | noop
+    action: str
 
 
 class CategoryCB(CallbackData, prefix="cat"):
-    key: str
+    category_id: int          # 7-dars: satr kalit o'rniga baza ID si
 
 
 class ProductCB(CallbackData, prefix="prod"):
-    action: str                    # open | add | inc | dec
+    action: str
     product_id: int = 0
     qty: int = 1
 
 
 class CartCB(CallbackData, prefix="cart"):
-    action: str                    # inc | dec | del | clear | checkout
+    action: str
     product_id: int = 0
 
 
 class CheckoutCB(CallbackData, prefix="chk"):
-    action: str                    # payment | submit | abort
+    action: str
     value: str = ""
+
+
+class AdminCB(CallbackData, prefix="adm"):
+    action: str
+    order_id: int = 0
+    value: str = ""
+
+
+class CourierCB(CallbackData, prefix="crr"):
+    action: str
+    order_id: int = 0
+
+
+class OrderCB(CallbackData, prefix="ord"):
+    action: str
+    order_id: int = 0

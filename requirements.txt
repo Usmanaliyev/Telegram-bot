@@ -1,0 +1,14 @@
+aiogram==3.30.0
+Django==6.1
+python-dotenv==1.2.3
+asgiref==3.12.1
+
+# production
+gunicorn==23.0.0
+psycopg[binary]==3.2.3
+redis==5.2.1
+
+# testlar
+pytest==9.1.1
+pytest-asyncio==1.4.0
+pytest-django==4.14.0
